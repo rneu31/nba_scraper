@@ -48,7 +48,7 @@ def check_valid_dates(from_date, to_date):
 
 
 def scrape_date_range(
-    date_from, date_to, data_format="pandas", data_dir=f"{Path.home()}/nbadata.csv"
+    date_from, date_to, data_format="pandas", data_dir=Path.home()
 ):
     """
     Function scrapes all `regular-season` nba games between two dates
@@ -80,11 +80,11 @@ def scrape_date_range(
     if data_format == "pandas":
         return pd.concat(scraped_games)
     else:
-        pd.concat(scraped_games).to_csv(data_dir, index=False)
+        pd.concat(scraped_games).to_csv(f"{data_dir}/nbadata.csv", index=False)
         return None
 
 
-def scrape_wnba_game(game_ids, data_format="pandas", data_dir=f"{Path.home()}/"):
+def scrape_wnba_game(game_ids, data_format="pandas", data_dir=Path.home()):
     """
     function scrapes wnba games and returns them in the data format requested
     by the user.
@@ -120,7 +120,7 @@ def scrape_wnba_game(game_ids, data_format="pandas", data_dir=f"{Path.home()}/")
         return None
 
 
-def scrape_game(game_ids, data_format="pandas", data_dir=f"{Path.home()}/"):
+def scrape_game(game_ids, data_format="pandas", data_dir=Path.home()):
     """
     function scrapes nba games and returns them in the data format requested
     by the user.
@@ -159,7 +159,7 @@ def scrape_game(game_ids, data_format="pandas", data_dir=f"{Path.home()}/"):
         return None
 
 
-def scrape_season(season, data_format="pandas", data_dir=f"{Path.home()}/nbadata.csv"):
+def scrape_season(season, data_format="pandas", data_dir=Path.home()):
     """
     This function scrapes and entire season and either returns it as a pandas
     dataframe or writes it to file as a csv file
@@ -183,6 +183,7 @@ def scrape_season(season, data_format="pandas", data_dir=f"{Path.home()}/nbadata
     game_ids = list(range(int(f"2{season-2001}00001"), int(f"2{season-2001}01231")))
 
     for game in game_ids:
+        time.sleep(1.5)
         if game == 21201214:
             print(f"Game {game} is not available")
             continue
